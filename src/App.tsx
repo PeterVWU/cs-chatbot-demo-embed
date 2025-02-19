@@ -1,35 +1,76 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+const ChatPopup = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const popupStyles: {
+    container: React.CSSProperties;
+    closeButton: React.CSSProperties;
+    iframe: React.CSSProperties;
+    chatButton: React.CSSProperties;
+  } = {
+    container: {
+      position: 'fixed',
+      bottom: '80px',
+      right: '20px',
+      width: '350px',
+      height: '600px',
+      zIndex: 1001,
+    },
+    closeButton: {
+      position: 'absolute',
+      top: '10px',
+      right: '10px',
+      background: 'transparent',
+      border: 'none',
+      color: '#000',
+      fontSize: '20px',
+      cursor: 'pointer',
+      zIndex: 1002,
+    },
+    iframe: {
+      width: '100%',
+      height: '600px',
+      border: 'none',
+    },
+    chatButton: {
+      position: 'fixed',
+      bottom: '20px',
+      right: '20px',
+      zIndex: 1000,
+      backgroundColor: '#007bff',
+      color: 'white',
+      border: 'none',
+      padding: '15px',
+      borderRadius: '50%',
+      cursor: 'pointer',
+      fontSize: '16px',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.3)',
+    },
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      {/* Chat button */}
+      <button style={popupStyles.chatButton} onClick={() => setIsOpen(true)}>
+        Chat
+      </button>
 
-export default App
+      {/* Chat popup */}
+      {isOpen && (
+        <div style={popupStyles.container}>
+          <iframe
+            title="Chatbot"
+            src="https://chatbot.vapewholesaleusa.com/"
+            style={popupStyles.iframe}
+          />
+          <button style={popupStyles.closeButton} onClick={() => setIsOpen(false)}>
+            &times;
+          </button>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default ChatPopup;
